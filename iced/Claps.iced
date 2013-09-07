@@ -66,5 +66,25 @@ class Claps
 	# Submit the amount of respect given
 	submitRespect: ->
 		console.log "GIVE THIS SITE SOME RESPECT " + @number_of_claps
+
+		if @number_of_claps <= 2
+			$.get(
+	    		"http://resizeasaurus.herokuapp.com/RESPECT/" + encodeURIComponent(document.URL) + "/",
+	    		(data) ->
+	       			console.log data
+			);
+
+		else if @number_of_claps > 2 and @number_of_claps < 5
+			$.get(
+	    		"http://resizeasaurus.herokuapp.com/RESPECT/" + encodeURIComponent(document.URL) + "/" + "none" + "/" + "clap",
+	    		(data) ->
+	       			console.log data
+			);
+		else 
+			$.get(
+	    		"http://resizeasaurus.herokuapp.com/RESPECT/" + encodeURIComponent(document.URL) + "/" + "none" + "/" + "awesome clap",
+	    		(data) ->
+	       			console.log data
+			);
 		return
 
