@@ -109,7 +109,8 @@ class Jaws
         @state = @STATES.CHOMPING
         @resetDoneTimer()
         Main.page.wreck()
-        console.log "CHOMP"
+        new WordArt "CHOMP!"
+        new WordArt "CHOMP!"
         return
 
     # Hides both the top and bottom halves of the monster.
