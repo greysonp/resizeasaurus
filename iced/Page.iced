@@ -55,52 +55,6 @@ class Page
         return
 
     explode: ->
-        if not @stage?
-            @initStage()
-        else
-            @pulse()
         return
 
-    initStage: ->
-        console.log "initStage()"
-        @stage = new createjs.Stage($('canvas')[0])
-
-        # Get our scaled data url
-        dataUrl = Canvas2Image.saveAsPNG $('canvas')[0], false, $(window).width(), $('canvas').height()
-        $('body').append "<img id='data-img' src='#{dataUrl}' />" 
-        bitmap = new createjs.Bitmap document.getElementById('data-img')
-        bitmap.x = 200
-        bitmap.y = 200
-        bitmap.width = 200
-        @stage.addChild bitmap
-        createjs.Ticker.addEventListener "tick", () =>
-            @stage.update()
-            console.log "Updated"
-        # Init our spritesheet
-        # var data = {
-        # data = 
-        #     images: [dataUrl]
-        #     frames: {width:$(window).width()/Page.NUM_COLS, height:$('canvas').height()/Page.NUM_ROWS}
-
-        # spriteSheet = new createjs.SpriteSheet data
-        # animation = new createjs.Bitmap dataUrl
-        # # animation.gotoAndStop 1
-        # @stage.addChild animation
-        # @stage.update()
-        return
-
-    pulse: ->
-        console.log "pulse()"
-        return
-
-    damage: ->
-        console.log @health
-        if @health < 25
-            return "explode"
-        else if @health < 50
-            return "explode"
-        else if @health < 75
-            return "explode"
-        else
-            return "explosion"
 

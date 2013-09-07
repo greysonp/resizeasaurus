@@ -180,7 +180,6 @@ class Jaws
     submitWreckage: =>
         console.log "THIS SITE GOT WRECKED"
 
-
         $.get(
                 "http://resizeasaurus.herokuapp.com/WRECK/" + encodeURIComponent(document.URL) + "/" + "none" + "/" + Main.page.damage(),
                 (data) ->

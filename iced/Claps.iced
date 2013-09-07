@@ -42,6 +42,7 @@ class Claps
 		if width is 400
 			# since each hand registers a clap only count half the claps
 			@number_of_claps += 0.5
+			new WordArt "Clap!"
 
 		return
 
