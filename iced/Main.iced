@@ -7,6 +7,7 @@ class Main
 
     constructor: ->
         @jaws = new Jaws
+        @claps = new Claps
         $(window).resize @onResize
 
     onResize: =>
