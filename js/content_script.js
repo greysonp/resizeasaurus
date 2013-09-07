@@ -168,7 +168,7 @@
 
     function Claps() {
       this.state = this.STATES.HIDDEN;
-      $('body').prepend("<div class='left-hand'>\n	<h1> A BIG LEFT HAND </h1>\n</div>\n<div class='right-hand'>\n	<h1> A BIG RIGHT HAND </h1>\n</div>");
+      $('body').prepend("<div class='left-hand'>\n</div>\n<div class='right-hand'>\n</div>");
       return;
     }
 
@@ -185,7 +185,6 @@
 
     Claps.prototype.reset = function() {
       var _this = this;
-      console.log("In reset! with state " + this.state);
       if (this.state === this.STATES.HIDDEN) {
         $('.left-hand').css("left", -this.WIDTH);
         $('.right-hand').css("right", -this.WIDTH);
@@ -199,7 +198,6 @@
 
     Claps.prototype.done = function() {
       var _this = this;
-      console.log("Levels of waiting!");
       return setTimeout(function() {
         _this.submitRespect();
       }, this.WAIT_TIME);

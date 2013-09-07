@@ -23,10 +23,8 @@ class Claps
 
 		$('body').prepend """
 				<div class='left-hand'>
-					<h1> A BIG LEFT HAND </h1>
 				</div>
 				<div class='right-hand'>
-					<h1> A BIG RIGHT HAND </h1>
 				</div>
 			"""
 		return
