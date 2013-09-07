@@ -1,4 +1,4 @@
-content_script = --join js/content_script.js --compile iced/*.iced 
+content_script = --join js/content_script.js --compile iced/Jaws.iced iced/Main.iced 
 stylus = stylus stylus/*.styl --out css/
 
 default: 

@@ -1,0 +1,51 @@
+monsterHeight = 100px
+cornerWidth = 100px
+
+#monster-t, #monster-b
+    position fixed
+    width 100%
+    height monsterHeight
+    z-index 2000000000
+    display -webkit-box
+    -webkit-box-orient horizontal
+    -webkit-box-align stretch
+
+#monster-t
+    top -1 * monsterHeight
+
+    .monster-l
+        background-color red
+
+    .monster-m 
+        background-color green
+
+    .monster-r
+        background-color blue
+
+#monster-b
+    bottom -1 * monsterHeight
+    
+    .monster-l
+        background-color red
+
+    .monster-m 
+        background-color green
+
+    .monster-r
+        background-color blue
+
+
+.monster-l, .monster-m, .monster-rm
+    height monsterHeight
+
+.monster-l, .monster-r
+    width cornerWidth
+
+.monster-l
+    left 0
+
+.monster-m
+    -webkit-box-flex 1.0
+
+.monster-r
+    right 0
