@@ -22,11 +22,13 @@ class Claps
 		@state = @STATES.HIDDEN # initial state should be hidden
 
 		$('body').prepend """
-				<div class='left-hand'>
-				</div>
-				<div class='right-hand'>
-				</div>
-			"""
+							<div class='left-hand'></div>
+							<div class='right-hand'></div>
+						  """
+
+		$('.left-hand').css("background-image", "url(" + chrome.extension.getURL("../img/claw_left.png") + ")")
+		$('.right-hand').css("background-image", "url(" + chrome.extension.getURL("../img/claw_right.png") + ")")
+
 		return
 
 	clapping: (percentClapped, width) ->

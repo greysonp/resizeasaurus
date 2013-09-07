@@ -17,23 +17,18 @@
   width: 100%;
   position: fixed;
 }
-.left-hand {
-  position: absolute;
+.left-hand,
+.right-hand {
+  position: fixed;
   height: 100%;
   z-index: 2000000000;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  left: -100px;
-  background-color: #00f;
   width: 100px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.left-hand {
+  left: -100px;
 }
 .right-hand {
-  position: absolute;
-  height: 100%;
-  z-index: 2000000000;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
   right: -100px;
-  background-color: #f00;
-  width: 100px;
 }

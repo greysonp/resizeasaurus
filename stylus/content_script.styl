@@ -25,23 +25,16 @@ clapsWidth = 100px
 //////////////////// BEGIN CLAP /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
+.left-hand, .right-hand
+    position fixed
+    height 100%
+    z-index 2000000000
+    width clapsWidth
+    background-repeat no-repeat
+    background-position center
+
 .left-hand
-    position absolute
-    height 100%
-    z-index 2000000000
-    display -webkit-box
-    -webkit-box-orient vertical
     left -100px
-    background-color blue
-    width 100px
-
-
+    
 .right-hand
-    position absolute
-    height 100%
-    z-index 2000000000
-    display -webkit-box
-    -webkit-box-orient vertical
     right -100px
-    background-color red
-    width 100px

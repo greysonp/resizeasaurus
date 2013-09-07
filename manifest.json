@@ -40,6 +40,8 @@
         "img/jaws_top_800.png",
         "img/jaws_bottom_1200.png",
         "img/jaws_bottom_800.png",
+        "img/claw_left.png",
+        "img/claw_right.png",
         "css/content_script.css"
     ]
 }
