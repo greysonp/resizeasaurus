@@ -16,7 +16,8 @@
     "url": "https://github.com/greysonp/resizeasaurus/issues"
   },
   "dependencies": {
-      "iced-coffee-script": "*"
+      "iced-coffee-script": "*",
+      "stylus": "*"
   }
 
 }
