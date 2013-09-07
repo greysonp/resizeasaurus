@@ -93,3 +93,14 @@ class Page
         console.log "pulse()"
         return
 
+    damage: ->
+        console.log @health
+        if @health < 25
+            return "explode"
+        else if @health < 50
+            return "explode"
+        else if @health < 75
+            return "explode"
+        else
+            return "explosion"
+

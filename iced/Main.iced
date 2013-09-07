@@ -1,4 +1,4 @@
-class Main
+class window.Main
 
     # Statics
     @MIN_WIDTH: 400

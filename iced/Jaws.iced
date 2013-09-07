@@ -170,6 +170,14 @@ class Jaws
 
 
     # Submits our wreckage to the server to be tweeted
-    submitWreckage: ->
+    submitWreckage: =>
         console.log "THIS SITE GOT WRECKED"
+
+
+        $.get(
+                "http://resizeasaurus.herokuapp.com/WRECK/" + encodeURIComponent(document.URL) + "/" + "none" + "/" + Main.page.damage(),
+                (data) ->
+                    console.log data
+            );
+
         return
