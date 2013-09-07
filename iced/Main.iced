@@ -5,10 +5,14 @@ class Main
     @MIN_HEIGHT: 200
     @PEEK_THRESHOLD: 300
     @CLAP_THRESHOLD: 650
+        
+    @page: null
 
     constructor: ->
-        @jaws = new Jaws
-        @claps = new Claps
+        Main.page = new Page () =>
+            @jaws = new Jaws
+            @claps = new Claps
+            return
         $(window).resize @onResize
 
     onResize: =>

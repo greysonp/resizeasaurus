@@ -4,51 +4,18 @@
   width: 100%;
   height: 100px;
   z-index: 2000000000;
-  display: -webkit-box;
-  -webkit-box-orient: horizontal;
-  -webkit-box-align: stretch;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 #monster-t {
   top: -100px;
 }
-#monster-t .monster-l {
-  background-color: #f00;
-}
-#monster-t .monster-m {
-  background-color: #008000;
-}
-#monster-t .monster-r {
-  background-color: #00f;
-}
 #monster-b {
   bottom: -100px;
 }
-#monster-b .monster-l {
-  background-color: #f00;
-}
-#monster-b .monster-m {
-  background-color: #008000;
-}
-#monster-b .monster-r {
-  background-color: #00f;
-}
-.monster-l,
-.monster-m,
-.monster-rm {
-  height: 100px;
-}
-.monster-l,
-.monster-r {
-  width: 100px;
-}
-.monster-l {
-  left: 0;
-}
-.monster-m {
-  -webkit-box-flex: 1;
-}
-.monster-r {
-  right: 0;
+.squish-canvas {
+  width: 100%;
+  position: fixed;
 }
 .left-hand {
   position: absolute;
