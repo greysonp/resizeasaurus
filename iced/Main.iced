@@ -41,4 +41,12 @@ class Main
             @claps.reset()
         return
 
+    @click: (element) ->
+        if element.fireEvent? 
+            element.fireEvent('onclick')
+        else
+            evObj = document.createEvent 'Events'
+            evObj.initEvent 'click', true, false
+            element.dispatchEvent evObj
+
 main = new Main

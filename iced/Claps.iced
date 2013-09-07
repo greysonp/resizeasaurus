@@ -18,6 +18,9 @@ class Claps
 
 	DONE_TIME: 1000
 
+	siteMapping: {}
+	site: null
+
 	constructor: ->
 		@state = @STATES.HIDDEN # initial state should be hidden
 
@@ -28,6 +31,8 @@ class Claps
 
 		$('.left-hand').css("background-image", "url(" + chrome.extension.getURL("../img/claw_left.png") + ")")
 		$('.right-hand').css("background-image", "url(" + chrome.extension.getURL("../img/claw_right.png") + ")")
+
+		@identifySite()
 
 		return
 
@@ -43,6 +48,8 @@ class Claps
 			# since each hand registers a clap only count half the claps
 			@number_of_claps += 0.5
 			new WordArt "Clap!"
+			if @site?
+				@siteMapping[@site]()
 
 		return
 
@@ -91,3 +98,21 @@ class Claps
 			);
 		return
 
+	identifySite: ->
+		url = window.location.href
+		console.log "URL: " + url
+		if url.indexOf("twitter.com") >= 0 and url.indexOf("/status/") > 0
+			@site = "tweet"
+
+		console.log "Site: " + @site
+		# Map functions
+		@siteMapping["tweet"] = @clapTweet
+		return
+
+	clapTweet: =>
+		console.log "Number of claps: " + @number_of_claps
+		if @number_of_claps is 2
+			Main.click $('.favorite')[0]
+		else if @number_of_claps is 4
+			Main.click $('.retweet')[0]
+		return
