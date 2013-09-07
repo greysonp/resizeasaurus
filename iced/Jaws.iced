@@ -44,11 +44,18 @@ class Jaws
                             <div id="monster-t"></div>
                             <div id="monster-b"></div>
                           """
-        $('#monster-t').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_top_1200.png") + ")")
-        $('#monster-b').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_bottom_1200.png") + ")")
+
+        # We can't do @sizeJaws because the first set is different
+        if $(window).width() > 800
+            $('#monster-t').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_top_1200.png") + ")")
+            $('#monster-b').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_bottom_1200.png") + ")")
+        else 
+            $('#monster-t').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_top_800.png") + ")")
+            $('#monster-b').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_bottom_800.png") + ")")
 
     # Chooses the right positioning function based on the state
     tween: (percentClosed) ->
+        @sizeJaws()
         if @state is @STATES.CHOMPING
             @chompTween percentClosed
         else if @state isnt @STATES.HIDING
@@ -173,3 +180,20 @@ class Jaws
     submitWreckage: ->
         console.log "THIS SITE GOT WRECKED"
         return
+
+    sizeJaws: ->
+        currImg = $('#monster-t').css("background-image");
+        currSize = "1200"
+        console.log currImg
+        console.log "IndexOf: " + currImg.indexOf "800"
+        if currImg.indexOf("800") >= 0
+            currSize = "800"
+
+        console.log "currSize: " + currSize
+
+        if $(window).width() > 800 and currSize isnt "1200"
+            $('#monster-t').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_top_1200.png") + ")")
+            $('#monster-b').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_bottom_1200.png") + ")")
+        if $(window).width() <= 800 and currSize isnt "800"
+            $('#monster-t').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_top_800.png") + ")")
+            $('#monster-b').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_bottom_800.png") + ")")
