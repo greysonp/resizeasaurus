@@ -1,4 +1,4 @@
-resizeasaurus
+Resizeasaurus
 =============
 
-Resizeasaurus wrecks, and resizeasaurus accepts. Try to be on his good side.
+Resizeasaurus wrecks, and resizeasaurus respects. Try to stay on his good side.
