@@ -19,7 +19,7 @@ class Main
         if height < Main.PEEK_THRESHOLD
             pixelsToClose = height - Main.MIN_HEIGHT
             percentClosed = 1 - (pixelsToClose/(Main.PEEK_THRESHOLD - Main.MIN_HEIGHT))
-            @jaws.peek percentClosed
+            @jaws.tween percentClosed
         else
             @jaws.reset()
 

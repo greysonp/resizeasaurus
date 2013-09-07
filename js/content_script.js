@@ -7,9 +7,10 @@
 
   Jaws = (function() {
     Jaws.prototype.STATES = {
-      HIDDEN: 1,
-      PEEKING: 2,
-      CHOMPING: 3
+      HIDING: 1,
+      HIDDEN: 2,
+      PEEKING: 3,
+      CHOMPING: 4
     };
 
     Jaws.prototype.HEIGHT = 100;
@@ -18,10 +19,30 @@
 
     Jaws.prototype.TRANSITION_TIME = 500;
 
+    Jaws.prototype.CHOMP_COOLDOWN = 1000;
+
+    Jaws.prototype.DONE_COOLDOWN = 2000;
+
+    Jaws.prototype.TEETH_PERCENT = .3;
+
+    Jaws.prototype.closed = false;
+
+    Jaws.prototype.couldChomp = false;
+
+    Jaws.prototype.doneTimer = null;
+
     function Jaws() {
       this.state = this.STATES.HIDDEN;
       $('body').prepend("<div id=\"monster-t\">\n    <div class=\"monster-l\"></div>\n    <div class=\"monster-m\"></div>\n    <div class=\"monster-r\"></div>\n</div>\n<div id=\"monster-b\">\n    <div class=\"monster-l\"></div>\n    <div class=\"monster-m\"></div>\n    <div class=\"monster-r\"></div>\n</div>");
     }
+
+    Jaws.prototype.tween = function(percentClosed) {
+      if (this.state === this.STATES.CHOMPING) {
+        this.chompTween(percentClosed);
+      } else if (this.state !== this.STATES.HIDING) {
+        this.peek(percentClosed);
+      }
+    };
 
     Jaws.prototype.peek = function(percentClosed) {
       var pixelOffset;
@@ -29,21 +50,63 @@
       this.state = this.STATES.PEEKING;
       $('#monster-t').css('top', pixelOffset);
       $('#monster-b').css('bottom', pixelOffset);
+      if (percentClosed === 1) {
+        this.closed = true;
+        if (this.couldChomp) {
+          this.chomp();
+          this.couldChomp = false;
+        }
+      } else if (this.closed) {
+        this.closed = false;
+        this.couldChomp = true;
+        this.startChompTimer();
+      }
+    };
+
+    Jaws.prototype.chompTween = function(percentClosed) {
+      var adjustedHeight, pixelOffset;
+      adjustedHeight = this.HEIGHT * (1 - this.TEETH_PERCENT);
+      pixelOffset = percentClosed * adjustedHeight - adjustedHeight;
+      pixelOffset = pixelOffset > 0 ? 0 : pixelOffset;
+      $('#monster-t').css('top', pixelOffset);
+      $('#monster-b').css('bottom', pixelOffset);
+      if (percentClosed === 1) {
+        this.closed = true;
+        if (this.couldChomp) {
+          this.chomp();
+          this.couldChomp = false;
+          this.startDoneTimer();
+        }
+      } else if (this.closed) {
+        this.closed = false;
+        this.couldChomp = true;
+      }
+    };
+
+    Jaws.prototype.chomp = function() {
+      this.state = this.STATES.CHOMPING;
+      this.resetDoneTimer();
+      console.log("CHOMP");
     };
 
     Jaws.prototype.hide = function() {
+      var _this = this;
+      this.state = this.STATES.HIDING;
+      this.couldChomp = false;
+      this.closed = false;
       this.hideHalf('#monster-t', 'top');
       this.hideHalf('#monster-b', 'bottom');
+      setTimeout(function() {
+        _this.state = _this.STATES.HIDDEN;
+        _this.submitWreckage();
+      }, this.TRANSITION_TIME);
     };
 
     Jaws.prototype.hideHalf = function(selector, property) {
-      var props,
-        _this = this;
+      var props;
       props = {};
       props[property] = -this.HEIGHT;
-      $(selector).animate(props, this.TRANSITION_TIME, function() {
-        _this.state = _this.STATES.HIDDEN;
-      });
+      $(selector).animate(props, this.TRANSITION_TIME);
     };
 
     Jaws.prototype.reset = function() {
@@ -52,6 +115,35 @@
         $('#monster-t').css('top', -this.HEIGHT);
         $('#monster-b').css('bottom', -this.HEIGHT);
       }
+    };
+
+    Jaws.prototype.startChompTimer = function() {
+      var _this = this;
+      setTimeout(function() {
+        _this.couldChomp = false;
+      }, this.CHOMP_COOLDOWN);
+    };
+
+    Jaws.prototype.startDoneTimer = function() {
+      var _this = this;
+      if (this.doneTimer != null) {
+        return;
+      }
+      this.doneTimer = setTimeout(function() {
+        _this.hide();
+      }, this.DONE_COOLDOWN);
+    };
+
+    Jaws.prototype.resetDoneTimer = function() {
+      if (this.doneTimer != null) {
+        clearTimeout(this.doneTimer);
+        this.doneTimer = null;
+        return this.startDoneTimer();
+      }
+    };
+
+    Jaws.prototype.submitWreckage = function() {
+      console.log("THIS SITE GOT WRECKED");
     };
 
     return Jaws;
@@ -81,7 +173,7 @@
       if (height < Main.PEEK_THRESHOLD) {
         pixelsToClose = height - Main.MIN_HEIGHT;
         percentClosed = 1 - (pixelsToClose / (Main.PEEK_THRESHOLD - Main.MIN_HEIGHT));
-        this.jaws.peek(percentClosed);
+        this.jaws.tween(percentClosed);
       } else {
         this.jaws.reset();
       }
