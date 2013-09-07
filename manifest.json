@@ -13,10 +13,10 @@
         {
             "exclude_globs": [  ],
             "include_globs": [ "*" ],
-            "css": ["css/style.css"],
+            "css": ["css/content_script.css"],
             "js": [ 
                 "js/libs/jquery-2.0.3.min.js",
-                "js/easeljs-0.6.1.min.js",
+                "js/libs/easeljs-0.6.1.min.js",
                 "js/content_script.js"],
 
             "matches": [  "http://*/*",
@@ -27,24 +27,11 @@
     ],
 
     "permissions": [
-        "tabs",
-        "storage",
-        "tts"
     ],
 
     "web_accessible_resources": [
-        "img/lightning_bolt.png",
-        "img/icon.png",
-        "css/style.css",
-        "css/bootstrap.min.css",
-        "js/jquery-1.9.1.min.js",
-        "js/libs/jquery.min.map",
-        "js/bootstrap.min.js",
-        "js/popup.js",
-        "newtab.html",
-        "css/fonts/OpenSans-Light.ttf",
-        "css/fonts/OpenSans-Regular.ttf",
-        "css/fonts/OpenSans-Italic.ttf",
-        "css/fonts/OpenSans-Bold.ttf"
+        "js/libs/jquery-2.0.3.min.js",
+        "js/libs/easeljs-0.6.1.min.js",
+        "css/content_script.css"
     ]
 }
