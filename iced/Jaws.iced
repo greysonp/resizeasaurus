@@ -107,6 +107,7 @@ class Jaws
     chomp: ->
         @state = @STATES.CHOMPING
         @resetDoneTimer()
+        Main.page.wreck()
         console.log "CHOMP"
         return
 

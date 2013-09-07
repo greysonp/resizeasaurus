@@ -4,9 +4,12 @@ class Main
     @MIN_WIDTH: 400
     @MIN_HEIGHT: 200
     @PEEK_THRESHOLD: 300
+    @page: null
 
     constructor: ->
-        @jaws = new Jaws
+        Main.page = new Page () =>
+            @jaws = new Jaws
+            return
         $(window).resize @onResize
 
     onResize: =>

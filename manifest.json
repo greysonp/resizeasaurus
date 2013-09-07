@@ -17,6 +17,7 @@
             "js": [ 
                 "js/libs/jquery-2.0.3.min.js",
                 "js/libs/easeljs-0.6.1.min.js",
+                "js/libs/html2canvas.js",
                 "js/content_script.js"],
 
             "matches": [  "http://*/*",
@@ -32,6 +33,7 @@
     "web_accessible_resources": [
         "js/libs/jquery-2.0.3.min.js",
         "js/libs/easeljs-0.6.1.min.js",
+        "js/libs/html2canvas.js",
         "css/content_script.css"
     ]
 }

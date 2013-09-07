@@ -50,3 +50,7 @@
 .monster-r {
   right: 0;
 }
+.squish-canvas {
+  width: 100%;
+  position: fixed;
+}
