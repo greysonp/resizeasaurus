@@ -37,7 +37,9 @@
         "js/libs/html2canvas.js",
         "js/libs/canvas2image.js",
         "img/jaws_top_1200.png",
+        "img/jaws_top_800.png",
         "img/jaws_bottom_1200.png",
+        "img/jaws_bottom_800.png",
         "css/content_script.css"
     ]
 }
