@@ -4,9 +4,11 @@ class Main
     @MIN_WIDTH: 400
     @MIN_HEIGHT: 200
     @PEEK_THRESHOLD: 300
+    @CLAP_THRESHOLD: 650
 
     constructor: ->
         @jaws = new Jaws
+        @claps = new Claps
         $(window).resize @onResize
 
     onResize: =>
@@ -26,6 +28,13 @@ class Main
         return
 
     resizeWidth: (width) ->
+        # check width
+        if width < Main.CLAP_THRESHOLD
+            pixelsToClose = width - Main.MIN_WIDTH
+            percentClosed = 1 - (pixelsToClose/(Main.CLAP_THRESHOLD - Main.MIN_WIDTH))
+            @claps.clapping percentClosed, width
+        else
+            @claps.reset()
         return
 
 main = new Main

@@ -1,5 +1,6 @@
 monsterHeight = 100px
 cornerWidth = 100px
+clapsWidth = 100px
 
 #monster-t, #monster-b
     position fixed
@@ -49,3 +50,28 @@ cornerWidth = 100px
 
 .monster-r
     right 0
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////// BEGIN CLAP /////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.left-hand
+    position absolute
+    height 100%
+    z-index 2000000000
+    display -webkit-box
+    -webkit-box-orient vertical
+    left -100px
+    background-color blue
+    width 100px
+
+
+.right-hand
+    position absolute
+    height 100%
+    z-index 2000000000
+    display -webkit-box
+    -webkit-box-orient vertical
+    right -100px
+    background-color red
+    width 100px
