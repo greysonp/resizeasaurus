@@ -33,7 +33,9 @@
 
     function Jaws() {
       this.state = this.STATES.HIDDEN;
-      $('body').prepend("<div id=\"monster-t\">\n    <div class=\"monster-l\"></div>\n    <div class=\"monster-m\"></div>\n    <div class=\"monster-r\"></div>\n</div>\n<div id=\"monster-b\">\n    <div class=\"monster-l\"></div>\n    <div class=\"monster-m\"></div>\n    <div class=\"monster-r\"></div>\n</div>");
+      $('body').prepend("<div id=\"monster-t\"></div>\n<div id=\"monster-b\"></div>");
+      $('#monster-t').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_top_1200.png") + ")");
+      $('#monster-b').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_bottom_1200.png") + ")");
     }
 
     Jaws.prototype.tween = function(percentClosed) {
@@ -168,6 +170,12 @@
 
     Page.SQUISH_FACTOR = 1.3;
 
+    Page.prototype.stage = null;
+
+    Page.NUM_ROWS = 5;
+
+    Page.NUM_COLS = 8;
+
     function Page(cb) {
       console.log("starting constructor");
       html2canvas(document.body, {
@@ -189,12 +197,45 @@
       }
       if (this.health > Page.THRESH_SQUISH) {
         this.squish();
+      } else {
+        this.explode();
       }
     };
 
     Page.prototype.squish = function() {
       $('canvas').css("height", $('canvas').height() / Page.SQUISH_FACTOR);
       $('canvas').css("top", $(document).height() / 2 - $('canvas').height() / 2);
+      this.health -= 10;
+    };
+
+    Page.prototype.explode = function() {
+      if (this.stage == null) {
+        this.initStage();
+      } else {
+        this.pulse();
+      }
+    };
+
+    Page.prototype.initStage = function() {
+      var bitmap, dataUrl,
+        _this = this;
+      console.log("initStage()");
+      this.stage = new createjs.Stage($('canvas')[0]);
+      dataUrl = Canvas2Image.saveAsPNG($('canvas')[0], false, $(window).width(), $('canvas').height());
+      $('body').append("<img id='data-img' src='" + dataUrl + "' />");
+      bitmap = new createjs.Bitmap(document.getElementById('data-img'));
+      bitmap.x = 200;
+      bitmap.y = 200;
+      bitmap.width = 200;
+      this.stage.addChild(bitmap);
+      createjs.Ticker.addEventListener("tick", function() {
+        _this.stage.update();
+        return console.log("Updated");
+      });
+    };
+
+    Page.prototype.pulse = function() {
+      console.log("pulse()");
     };
 
     return Page;

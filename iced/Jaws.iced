@@ -41,17 +41,11 @@ class Jaws
         # We need to stretch it appropriately, so we have static end pieces
         # and a stretchable middle piece.
         $('body').prepend """
-                            <div id="monster-t">
-                                <div class="monster-l"></div>
-                                <div class="monster-m"></div>
-                                <div class="monster-r"></div>
-                            </div>
-                            <div id="monster-b">
-                                <div class="monster-l"></div>
-                                <div class="monster-m"></div>
-                                <div class="monster-r"></div>
-                            </div>
+                            <div id="monster-t"></div>
+                            <div id="monster-b"></div>
                           """
+        $('#monster-t').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_top_1200.png") + ")")
+        $('#monster-b').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_bottom_1200.png") + ")")
 
     # Chooses the right positioning function based on the state
     tween: (percentClosed) ->
