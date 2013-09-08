@@ -18,15 +18,29 @@ class Claps
 
 	DONE_TIME: 1000
 
+	sound_player: true
+
+	applause: ""
+
 	constructor: ->
 		@state = @STATES.HIDDEN # initial state should be hidden
 
 		$('body').prepend """
-				<div class='left-hand'>
-				</div>
-				<div class='right-hand'>
-				</div>
-			"""
+
+			<div class='left-hand'>
+			</div>
+			<div class='right-hand'>
+			</div>	
+		"""
+		clap_list = [chrome.extension.getURL('../audio/clap_1.mp3'), chrome.extension.getURL('../audio/clap_2.mp3'), chrome.extension.getURL('../audio/clap_3.mp3')]
+		@applause = chrome.extension.getURL('../audio/strong_applause.mp3')
+
+		$('body').append "<div id='music_player' style='visibility:hidden;display:none;'>
+				<audio id='audio_player_1' src=" + clap_list[0]  + " ></audio>
+				<audio id='audio_player_2' src=" + clap_list[1]  + " ></audio>
+				<audio id='audio_player_3' src=" + clap_list[2]  + " ></audio>
+			</div>"
+
 		return
 
 	clapping: (percentClapped, width) ->
@@ -40,7 +54,18 @@ class Claps
 		if width is 400
 			# since each hand registers a clap only count half the claps
 			@number_of_claps += 0.5
+			random_clap = "#audio_player_" + Math.floor(Math.random() * 3 + 1)
+			console.log random_clap + "<--- which audio id"
+			$(random_clap)[0].play()
 
+			console.log @sound_player
+			if @sound_player is true
+				console.log "Should be putting applause in"
+				@sound_player = !true
+				$('body').append "<div id='applause_player' style='visibility:hidden;display:none'> 
+						<audio id='background_applause' src=" + @applause + " controls autoplay loop></audio>
+					</div>"
+				
 		return
 
 	reset: ->
@@ -51,6 +76,8 @@ class Claps
 			$('.right-hand').css "right", -@WIDTH
 		else
 			@state = @STATES.HIDDEN
+			$('div').remove("#applause_player")
+			@sound_player = true
 			setTimeout ()=>
 				@done()
 				return
@@ -59,9 +86,11 @@ class Claps
 
 	done: ->
 		setTimeout ()=>
+			$('div').remove '#soundcloud_player'
 			@submitRespect()
 			return
 		, @WAIT_TIME
+
 
 	# Submit the amount of respect given
 	submitRespect: ->
