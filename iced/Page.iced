@@ -11,7 +11,7 @@ class Page
     # An array of rotation values that matches up with @elements
     rotations: []
 
-    @THRESH_SQUISH: 40
+    @THRESH_SQUISH: 10
 
     @MIDPOINT: 0
 
@@ -23,8 +23,15 @@ class Page
 
     stage: null
 
-    @NUM_ROWS: 5
-    @NUM_COLS: 8
+    NUM_WINDOWS: 7
+
+    windows: []
+
+    @GRAVITY: 3
+
+    @SPEED: 50
+
+    WIN_SIZE: 100
 
     constructor: (cb) ->
         console.log "starting constructor"
@@ -36,6 +43,10 @@ class Page
             cb()
             return
         }
+        chrome.runtime.onConnect.addListener (port) ->
+            console.assert(port.name is "dinosaur")
+            port.onMessage.addListener (win) ->
+                console.log "Window ID: " + win.id
 
     wreck: ->
         if not @cleansed
@@ -67,8 +78,31 @@ class Page
         return
 
     explode: ->
-        for number in [0..9]
-            window.open $('canvas').getDataURL(), 'mywindow', 'width=400,height=200'
+        $('body').empty()
+        $('body').append("<img src='" + chrome.extension.getURL("img/bomb1.gif") + "' class='bomb-gif' />")
+        winSize = @WIN_SIZE
+        console.log "left: " + window.screenLeft + " width: " + window.innerWidth
+        for i in [1..@NUM_WINDOWS]
+            chrome.runtime.sendMessage {
+                "win": {
+                    "props": {
+                        "url": window.location.href,
+                        "type": "popup",
+                        "width": winSize,
+                        "height": winSize,
+                        "left": Math.round(window.screenLeft + window.innerWidth/2 - winSize/2),
+                        "top": Math.round(window.screenTop + window.innerHeight/2 - winSize/2)
+                    }
+                }
+            }, (response) =>
+                response.x = Math.round(window.screenLeft + window.innerWidth/2 - winSize/2)
+                response.y = Math.round(window.screenTop + window.innerHeight/2 - winSize/2)
+                response.vx = Math.round(Math.random() * Page.SPEED - Page.SPEED/2)
+                response.vy = Math.round(Math.random() * Page.SPEED/2 + Page.SPEED/4)
+                @windows.push(response)
+                return
+
+        setInterval @moveWindows, 1000/30
         return
 
     damage: ->
@@ -82,4 +116,19 @@ class Page
         else
             return "no"
 
-
+    moveWindows: =>
+        for win, i in @windows by -1
+            win.x = win.x + win.vx
+            win.y = win.y - win.vy
+            win.vy -= Page.GRAVITY
+            if (win.y + @WIN_SIZE >= screen.height)
+                chrome.runtime.sendMessage({"removeId": win.id})
+                @windows.splice(i, 1)
+            else
+                chrome.runtime.sendMessage({
+                    "windowId": win.id,
+                    "updateInfo": {
+                        "left": win.x,
+                        "top": win.y
+                    }
+                })

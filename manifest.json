@@ -9,6 +9,9 @@
         "48": "img/icon.png",
         "128": "img/icon.png"
     },
+    "background": {
+        "scripts": ["js/background.js"]
+    },
     "content_scripts": [
         {
             "exclude_globs": [  ],
@@ -41,6 +44,7 @@
         "img/jaws_top_800.png",
         "img/jaws_bottom_1200.png",
         "img/jaws_bottom_800.png",
+        "img/bomb1.gif",
         "css/content_script.css",
         "audio/*",
         "img/claw_left.png",
