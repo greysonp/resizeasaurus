@@ -79,7 +79,10 @@ class Page
 
     explode: ->
         $('body').empty()
-        $('body').append("<img src='" + chrome.extension.getURL("img/bomb1.gif") + "' class='bomb-gif' />")
+        $('body').append("<img src='" + chrome.extension.getURL("img/bomb1.gif") + "' class='bomb-gif' />" +
+            "<div id='bomb_music' style='visibility:hidden;display:none'>
+                <audio id='well_meet_again' src=" + chrome.extension.getURL("../audio/well_meet_again.mp3") +
+                " controls autoplay></audio></div>")
         winSize = @WIN_SIZE
         console.log "left: " + window.screenLeft + " width: " + window.innerWidth
         for i in [1..@NUM_WINDOWS]
