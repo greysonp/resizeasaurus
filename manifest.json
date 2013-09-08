@@ -28,7 +28,8 @@
         }
     ],
 
-    "permissions": [
+    "permissions": [ "http://*/*",
+        "https://*/*"
     ],
 
     "web_accessible_resources": [

@@ -67,6 +67,8 @@ class Page
         return
 
     explode: ->
+        for number in [0..9]
+            window.open $('canvas').getDataURL(), 'mywindow', 'width=400,height=200'
         return
 
     damage: ->
