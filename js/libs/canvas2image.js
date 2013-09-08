@@ -182,7 +182,7 @@ var Canvas2Image = (function() {
 				return false;
 			}
 			var oScaledCanvas = scaleCanvas(oCanvas, iWidth, iHeight);
-			var strData = oScaledCanvas.toDataURL("image/png");
+			var strData = oScaledCanvas.toDataURL();
 			return strData;
 		},
 

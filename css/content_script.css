@@ -32,6 +32,11 @@
   top: 0;
   left: 50;
 }
+.bomb-gif {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
 .left-hand,
 .right-hand {
   position: fixed;
