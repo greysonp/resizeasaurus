@@ -56,6 +56,18 @@ class Jaws
             $('#monster-t').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_top_800.png") + ")")
             $('#monster-b').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_bottom_800.png") + ")")
 
+
+        # create list of audio files used
+        sound = [chrome.extension.getURL('../audio/doggie_growl.mp3'), chrome.extension.getURL('../audio/wreck_1.mp3'),
+                    chrome.extension.getURL('../audio/wreck_2.mp3')]
+
+        # Append audio files at the end of the document
+        $('body').append "<div id='audio_collection' style='visibility:hidden;display:none'>
+                <audio id='doggie_growl' src=" + sound[0] + " ></audio>
+                <audio id='wreck_1' src=" + sound[1] + " ></audio>
+                <audio id='wreck_2' src=" + sound[2] + " ></audio>
+            </div>"
+
         @identifySite()
 
     # Chooses the right positioning function based on the state
@@ -74,6 +86,10 @@ class Jaws
         @state = @STATES.PEEKING
         $('#monster-t').css 'top', pixelOffset
         $('#monster-b').css 'bottom', pixelOffset
+
+        # Dog growl to let the user know we're ready to go
+        $('#doggie_growl')[0].play()
+
 
         # If we've fully closed, mark it as such and check
         # if we just chomped
@@ -116,6 +132,12 @@ class Jaws
         Main.page.wreck()
         new WordArt "CHOMP!"
         new WordArt "CHOMP!"
+
+        # RAWR
+        random_wreck = "#wreck_" + Math.floor(Math.random() * 2 +1)
+        console.log random_wreck
+        $(random_wreck)[0].play()
+
         if @site?
             @siteMapping[@site]()
         return

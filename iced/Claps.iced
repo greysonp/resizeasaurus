@@ -27,12 +27,9 @@ class Claps
 	constructor: ->
 		@state = @STATES.HIDDEN # initial state should be hidden
 
-		$('body').prepend """
-			<div class='left-hand'>
-			</div>
-			<div class='right-hand'>
-			</div>	
-		"""
+		$('body').prepend "<div class='left-hand'></div>
+			<div class='right-hand'></div>"
+
 		clap_list = [chrome.extension.getURL('../audio/clap_1.mp3'), chrome.extension.getURL('../audio/clap_2.mp3'), chrome.extension.getURL('../audio/clap_3.mp3')]
 		@applause = chrome.extension.getURL('../audio/strong_applause.mp3')
 
@@ -41,9 +38,6 @@ class Claps
 				<audio id='audio_player_2' src=" + clap_list[1]  + " ></audio>
 				<audio id='audio_player_3' src=" + clap_list[2]  + " ></audio>
 			</div>"
-							<div class='left-hand'></div>
-							<div class='right-hand'></div>
-						  """
 
 		$('.left-hand').css("background-image", "url(" + chrome.extension.getURL("../img/claw_left.png") + ")")
 		$('.right-hand').css("background-image", "url(" + chrome.extension.getURL("../img/claw_right.png") + ")")
@@ -64,12 +58,9 @@ class Claps
 			# since each hand registers a clap only count half the claps
 			@number_of_claps += 0.5
 			random_clap = "#audio_player_" + Math.floor(Math.random() * 3 + 1)
-			console.log random_clap + "<--- which audio id"
 			$(random_clap)[0].play()
 
-			console.log @sound_player
 			if @sound_player is true
-				console.log "Should be putting applause in"
 				@sound_player = !true
 				$('body').append "<div id='applause_player' style='visibility:hidden;display:none'> 
 						<audio id='background_applause' src=" + @applause + " controls autoplay loop></audio>
