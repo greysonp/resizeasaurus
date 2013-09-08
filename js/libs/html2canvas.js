@@ -2732,6 +2732,7 @@ _html2canvas.Renderer.Canvas = function(options) {
       safeImages.push(item['arguments'][0].src);
     }
     return true;
+    return false;
   }
 
   function isTransparent(backgroundColor) {

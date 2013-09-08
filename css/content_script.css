@@ -24,6 +24,14 @@
   font-weight: bold;
   font-family: Helvetica, Arial, Sans-Serif;
 }
+.crack-overlay {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  z-index: 200000001;
+  top: 0;
+  left: 50;
+}
 .left-hand,
 .right-hand {
   position: fixed;

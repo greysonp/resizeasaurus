@@ -199,12 +199,8 @@ class Jaws
     sizeJaws: ->
         currImg = $('#monster-t').css("background-image");
         currSize = "1200"
-        console.log currImg
-        console.log "IndexOf: " + currImg.indexOf "800"
         if currImg.indexOf("800") >= 0
             currSize = "800"
-
-        console.log "currSize: " + currSize
 
         if $(window).width() > 800 and currSize isnt "1200"
             $('#monster-t').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_top_1200.png") + ")")
@@ -218,7 +214,6 @@ class Jaws
         if url.indexOf("facebook.com") >= 0 and $('#profile_action_remove_friend a')?
             @site = "unfriend"
 
-        console.log "Site: " + @site
         # Map functions
         @siteMapping["unfriend"] = @wreckUnfriend
         return

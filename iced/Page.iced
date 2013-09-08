@@ -11,7 +11,7 @@ class Page
     # An array of rotation values that matches up with @elements
     rotations: []
 
-    @THRESH_SQUISH: 50
+    @THRESH_SQUISH: 40
 
     @MIDPOINT: 0
 
@@ -19,7 +19,7 @@ class Page
 
     cleansed: false
 
-    @SQUISH_FACTOR: 1.3
+    @SQUISH_FACTOR: 1.5
 
     stage: null
 
@@ -28,7 +28,7 @@ class Page
 
     constructor: (cb) ->
         console.log "starting constructor"
-        html2canvas document.body, { "onrendered": (canvas) ->
+        html2canvas document.body, { onrendered: (canvas) ->
             console.log "finished"
             $('body').prepend(canvas)
             $(canvas).hide()
@@ -45,11 +45,20 @@ class Page
                 $('.squish-canvas').nextAll().remove()
             $('canvas').show()
             @cleansed = true
-        if @health > Page.THRESH_SQUISH
+        if @health is 100
+            @crackScreen()
+        else if @health > Page.THRESH_SQUISH
             @squish()
         else
             @explode()
         return;
+
+    crackScreen: ->
+        console.log "Cracked Screen"
+        # Randomly pick between two images
+        imgSrc = chrome.extension.getURL "img/pieces.png"
+        $('body').prepend "<img src='#{imgSrc}' class='crack-overlay' />"
+        @health -= 10
 
     squish: ->
         $('canvas').css("height", $('canvas').height()/Page.SQUISH_FACTOR)

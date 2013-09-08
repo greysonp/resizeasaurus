@@ -132,7 +132,6 @@ class Claps
 		if url.indexOf("twitter.com") >= 0 and url.indexOf("/status/") > 0
 			@site = "tweet"
 
-		console.log "Site: " + @site
 		# Map functions
 		@siteMapping["tweet"] = @clapTweet
 		return
