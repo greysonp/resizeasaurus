@@ -34,6 +34,9 @@ class Jaws
     # The timer id of our done timer (kept so we can cancel it)
     doneTimer: null
 
+    siteMapping: {}
+    site: null
+
     constructor: ->
         @state = @STATES.HIDDEN
 
@@ -52,6 +55,8 @@ class Jaws
         else 
             $('#monster-t').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_top_800.png") + ")")
             $('#monster-b').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_bottom_800.png") + ")")
+
+        @identifySite()
 
     # Chooses the right positioning function based on the state
     tween: (percentClosed) ->
@@ -109,7 +114,10 @@ class Jaws
         @state = @STATES.CHOMPING
         @resetDoneTimer()
         Main.page.wreck()
-        console.log "CHOMP"
+        new WordArt "CHOMP!"
+        new WordArt "CHOMP!"
+        if @site?
+            @siteMapping[@site]()
         return
 
     # Hides both the top and bottom halves of the monster.
@@ -180,7 +188,6 @@ class Jaws
     submitWreckage: =>
         console.log "THIS SITE GOT WRECKED"
 
-
         $.get(
                 "http://resizeasaurus.herokuapp.com/WRECK/" + encodeURIComponent(document.URL) + "/" + "none" + "/" + Main.page.damage(),
                 (data) ->
@@ -205,3 +212,19 @@ class Jaws
         if $(window).width() <= 800 and currSize isnt "800"
             $('#monster-t').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_top_800.png") + ")")
             $('#monster-b').css("background-image", "url(" + chrome.extension.getURL("../img/jaws_bottom_800.png") + ")")
+
+    identifySite: ->
+        url = window.location.href
+        if url.indexOf("facebook.com") >= 0 and $('#profile_action_remove_friend a')?
+            @site = "unfriend"
+
+        console.log "Site: " + @site
+        # Map functions
+        @siteMapping["unfriend"] = @wreckUnfriend
+        return
+
+    wreckUnfriend: =>
+        console.log "Number of claps: " + @number_of_claps
+        if Main.page.health is 50
+            Main.click $('#profile_action_remove_friend a')[0]
+        return

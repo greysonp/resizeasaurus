@@ -1,4 +1,4 @@
-content_script = --join js/content_script.js --compile iced/Jaws.iced iced/Claps.iced iced/Page.iced iced/Main.iced  
+content_script = --join js/content_script.js --compile iced/Jaws.iced iced/Claps.iced iced/Page.iced iced/WordArt.iced iced/Main.iced  
 
 stylus = stylus stylus/*.styl --out css/
 

@@ -1,4 +1,4 @@
-class window.Main
+class Main
 
     # Statics
     @MIN_WIDTH: 400
@@ -40,5 +40,13 @@ class window.Main
         else
             @claps.reset()
         return
+
+    @click: (element) ->
+        if element.fireEvent? 
+            element.fireEvent('onclick')
+        else
+            evObj = document.createEvent 'Events'
+            evObj.initEvent 'click', true, false
+            element.dispatchEvent evObj
 
 main = new Main

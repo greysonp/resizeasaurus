@@ -21,12 +21,13 @@ class Claps
 	sound_player: true
 
 	applause: ""
+	siteMapping: {}
+	site: null
 
 	constructor: ->
 		@state = @STATES.HIDDEN # initial state should be hidden
 
 		$('body').prepend """
-
 			<div class='left-hand'>
 			</div>
 			<div class='right-hand'>
@@ -40,6 +41,14 @@ class Claps
 				<audio id='audio_player_2' src=" + clap_list[1]  + " ></audio>
 				<audio id='audio_player_3' src=" + clap_list[2]  + " ></audio>
 			</div>"
+							<div class='left-hand'></div>
+							<div class='right-hand'></div>
+						  """
+
+		$('.left-hand').css("background-image", "url(" + chrome.extension.getURL("../img/claw_left.png") + ")")
+		$('.right-hand').css("background-image", "url(" + chrome.extension.getURL("../img/claw_right.png") + ")")
+
+		@identifySite()
 
 		return
 
@@ -66,6 +75,10 @@ class Claps
 						<audio id='background_applause' src=" + @applause + " controls autoplay loop></audio>
 					</div>"
 				
+			new WordArt "Clap!"
+			if @site?
+				@siteMapping[@site]()
+
 		return
 
 	reset: ->
@@ -117,3 +130,20 @@ class Claps
 			);
 		return
 
+	identifySite: ->
+		url = window.location.href
+		if url.indexOf("twitter.com") >= 0 and url.indexOf("/status/") > 0
+			@site = "tweet"
+
+		console.log "Site: " + @site
+		# Map functions
+		@siteMapping["tweet"] = @clapTweet
+		return
+
+	clapTweet: =>
+		console.log "Number of claps: " + @number_of_claps
+		if @number_of_claps is 2
+			Main.click $('.favorite')[0]
+		else if @number_of_claps is 4
+			Main.click $('.retweet')[0]
+		return
