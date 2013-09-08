@@ -100,7 +100,6 @@ class Claps
 
 	identifySite: ->
 		url = window.location.href
-		console.log "URL: " + url
 		if url.indexOf("twitter.com") >= 0 and url.indexOf("/status/") > 0
 			@site = "tweet"
 

@@ -39,7 +39,10 @@ class Page
 
     wreck: ->
         if not @cleansed
-            $('.squish-canvas').nextAll().remove()
+            if $('#profile_action_remove_friend a')?
+                $('.squish-canvas').nextAll().css('display', 'none')
+            else
+                $('.squish-canvas').nextAll().remove()
             $('canvas').show()
             @cleansed = true
         if @health > Page.THRESH_SQUISH
@@ -56,5 +59,16 @@ class Page
 
     explode: ->
         return
+
+    damage: ->
+        console.log @health
+        if @health < 25
+            return "furious"
+        else if @health < 50
+            return "explosion"
+        else if @health < 75
+            return "angry"
+        else
+            return "no"
 
 
