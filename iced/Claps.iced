@@ -41,9 +41,6 @@ class Claps
 				<audio id='audio_player_2' src=" + clap_list[1]  + " ></audio>
 				<audio id='audio_player_3' src=" + clap_list[2]  + " ></audio>
 			</div>"
-							<div class='left-hand'></div>
-							<div class='right-hand'></div>
-						  """
 
 		$('.left-hand').css("background-image", "url(" + chrome.extension.getURL("../img/claw_left.png") + ")")
 		$('.right-hand').css("background-image", "url(" + chrome.extension.getURL("../img/claw_right.png") + ")")
