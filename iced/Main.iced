@@ -49,4 +49,6 @@ class Main
             evObj.initEvent 'click', true, false
             element.dispatchEvent evObj
 
-main = new Main
+window.onload = ->
+    main = new Main
+    return

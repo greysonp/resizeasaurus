@@ -28,7 +28,8 @@
         }
     ],
 
-    "permissions": [
+    "permissions": [ "http://*/*",
+        "https://*/*"
     ],
 
     "web_accessible_resources": [
@@ -44,6 +45,7 @@
         "audio/*",
         "img/claw_left.png",
         "img/claw_right.png",
+        "img/pieces.png",
         "css/content_script.css"
     ]
 }
